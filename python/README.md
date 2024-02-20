@@ -28,8 +28,10 @@ To get started quickly, follow these steps.
 
 Execute the following command in the root directory of the AdMob API Python client library samples to install the dependencies.
 
-    $ pip install --upgrade google-api-python-client
-    $ pip install --upgrade google-auth-oauthlib
+```shell
+$ poetry add google-api-python-client
+$ poetry add google-auth-oauthlib
+```
 
 ## Running the Examples ##
 

@@ -17,7 +17,7 @@ import admob_utils
 # Set the 'PUBLISHER_ID' which follows the format "pub-XXXXXXXXXXXXXXXX".
 # See https://support.google.com/admob/answer/2784578
 # for instructions on how to find your publisher ID.
-PUBLISHER_ID = 'pub-XXXXXXXXXXXXXXXX'
+# PUBLISHER_ID = 'pub-XXXXXXXXXXXXXXXX'
 
 
 def generate_mediation_report(service, publisher_id):
@@ -33,9 +33,18 @@ def generate_mediation_report(service, publisher_id):
   # "America/Los_Angeles", see
   # https://developers.google.com/admob/api/v1/reference/rest/v1/accounts.networkReport/generate
   # for more information.
+  import datetime
+
+  # Get the current date
+  current_date = datetime.date.today()
+
+  # Extract year, month, and day from the current date
+  current_year = current_date.year
+  current_month = current_date.month
+  current_day = current_date.day
   date_range = {
-      'start_date': {'year': 2020, 'month': 1, 'day': 1},
-      'end_date': {'year': 2020, 'month': 3, 'day': 30}
+      'start_date': {'year': current_year, 'month': current_month, 'day': current_day},
+      'end_date': {'year': current_year, 'month': current_month, 'day': current_day}
   }
 
   # Set dimensions.
@@ -79,7 +88,7 @@ def generate_mediation_report(service, publisher_id):
 
 def main():
   service = admob_utils.authenticate()
-  generate_mediation_report(service, PUBLISHER_ID)
+  generate_mediation_report(service, admob_utils.PUBLISHER_ID)
 
 
 if __name__ == '__main__':

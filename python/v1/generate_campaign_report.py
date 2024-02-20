@@ -20,7 +20,7 @@ from googleapiclient.http import MediaFileUpload
 # Set the 'PUBLISHER_ID' which follows the format "pub-XXXXXXXXXXXXXXXX".
 # See https://support.google.com/admob/answer/2784578
 # for instructions on how to find your publisher ID.
-PUBLISHER_ID = 'pub-XXXXXXXXXXXXXXXX'
+PUBLISHER_ID = 'pub-2122146556116316'
 
 # List of all oauth2 scopes needed for this code sample to run end-to-end. Note
 # that specific API endpoints may only need a subset of these API scopes. This

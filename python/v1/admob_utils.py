@@ -23,13 +23,15 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 
+PUBLISHER_ID = 'pub-2122146556116316'
+
 # [START main_body]
 PORT = 8080
 REDIRECT_URI = f"http://127.0.0.1:{PORT}"
 
 # This variable specifies the name of a file that contains the OAuth 2.0
 # information for this application, including its client_id and client_secret.
-CLIENT_SECRETS_FILE = "client_secrets.json"
+CLIENT_SECRETS_FILE = "secrets/client_secret_382747438221-ecbaeiu3nc20hnclcqcu2ueo96t2c2o8.apps.googleusercontent.com.json"
 
 # Default OAuth 2.0 access parameters.
 #
@@ -42,6 +44,7 @@ API_SCOPE = "https://www.googleapis.com/auth/admob.readonly"
 # Store refresh tokens in a local disk file. This file contains sensitive
 # authorization information.
 TOKEN_FILE = 'token.pickle'
+TOKEN_FILE = os.path.join(os.path.dirname(__file__), TOKEN_FILE)
 
 
 def load_user_credentials():

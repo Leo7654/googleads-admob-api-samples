@@ -14,10 +14,10 @@
 
 import admob_utils
 
-# Set the 'PUBLISHER_ID' which follows the format "pub-XXXXXXXXXXXXXXXX".
-# See https://support.google.com/admob/answer/2784578
-# for instructions on how to find your publisher ID.
-PUBLISHER_ID = 'pub-XXXXXXXXXXXXXXXX'
+sample = """{'row': {'dimensionValues': {'DATE': {'value': '20240220'}, 'APP': {'value':                          
+ 'ca-app-pub-2122146556116316~8497268021', 'displayLabel': 'ez빠른키보드 - 한글 키보드'}}, 'metricValues':              
+ {'ESTIMATED_EARNINGS': {'microsValue': '13032842'}, 'AD_REQUESTS': {'integerValue': '100013'}, 'MATCHED_REQUESTS':     
+ {'integerValue': '28208'}}}}"""
 
 
 def generate_network_report(service, publisher_id):
@@ -33,13 +33,23 @@ def generate_network_report(service, publisher_id):
   # "America/Los_Angeles", see
   # https://developers.google.com/admob/api/v1/reference/rest/v1/accounts.networkReport/generate
   # for more information.
+  import datetime
+
+  # Get the current date
+  current_date = datetime.date.today()
+
+  # Extract year, month, and day from the current date
+  current_year = current_date.year
+  current_month = current_date.month
+  current_day = current_date.day - 1
   date_range = {
-      'start_date': {'year': 2020, 'month': 1, 'day': 1},
-      'end_date': {'year': 2020, 'month': 3, 'day': 30}
+    'start_date': {'year': current_year, 'month': current_month, 'day': current_day},
+    'end_date': {'year': current_year, 'month': current_month, 'day': current_day}
   }
 
   # Set dimensions.
   dimensions = ['DATE', 'APP', 'PLATFORM', 'COUNTRY']
+  dimensions = ['DATE', 'APP']
 
   # Set metrics.
   metrics = ['ESTIMATED_EARNINGS', 'AD_REQUESTS', 'MATCHED_REQUESTS']
@@ -49,19 +59,19 @@ def generate_network_report(service, publisher_id):
 
   # Set dimension filters.
   dimension_filters = {
-      'dimension': 'COUNTRY',
-      'matches_any': {
-          'values': ['US', 'CA']
-      }
+    'dimension': 'COUNTRY',
+    'matches_any': {
+      'values': ['US', 'CA']
+    }
   }
 
   # Create network report specifications.
   report_spec = {
-      'date_range': date_range,
-      'dimensions': dimensions,
-      'metrics': metrics,
-      'sort_conditions': [sort_conditions],
-      'dimension_filters': [dimension_filters]
+    'date_range': date_range,
+    'dimensions': dimensions,
+    'metrics': metrics,
+    'sort_conditions': [sort_conditions],
+    # 'dimension_filters': [dimension_filters]
   }
 
   # Create network report request.
@@ -69,18 +79,19 @@ def generate_network_report(service, publisher_id):
 
   # Execute network report request.
   response = service.accounts().networkReport().generate(
-      parent='accounts/{}'.format(publisher_id), body=request).execute()
+    parent='accounts/{}'.format(publisher_id), body=request).execute()
 
   # Display responses.
   for report_line in response:
     print(report_line)
   print()
+  print(str(int(response[1]['row']['metricValues']['ESTIMATED_EARNINGS']['microsValue']) / 1000 / 1000) + '$')
   # [END main_body]
 
 
 def main():
   service = admob_utils.authenticate()
-  generate_network_report(service, PUBLISHER_ID)
+  generate_network_report(service, admob_utils.PUBLISHER_ID)
 
 
 if __name__ == '__main__':
