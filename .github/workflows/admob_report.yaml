@@ -2,6 +2,9 @@ name: Create admob report
 on:
   schedule:
     - cron: '59 23 * * *'
+  push:
+    branches:
+      - master
 jobs:
   ci:
     runs-on: ubuntu-latest
